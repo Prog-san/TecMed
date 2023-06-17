@@ -106,6 +106,7 @@ db.createCollection("Medical_Log", {
         cod_log: { bsonType: "int" },
         date_created: { bsonType: "date" }
       }
+
     }
   }
 });
@@ -154,12 +155,21 @@ db.createCollection("Treatments", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["cod_treatment", "cod_medical_log", "treat_start", "treat_end", "disease"],
+      required: ["cod_treatment", "cod_medical_log", "treat_period", "disease"],
       properties: {
         cod_treatment: { bsonType: "int" },
         cod_medical_log: { bsonType: "int" },
-        treat_start: { bsonType: "date" },
-        treat_end: { bsonType: "date" },
+        treat_period: {
+            bsonType: "object",
+            items: {
+                bsonType: "object",
+                required: ["treat_start", "treat_end"],
+                properties: {
+                  treat_start: { bsonType: "date" },
+                    treat_end: { bsonType: "date" }
+                }
+            }
+        },
         disease: { bsonType: "string" }
       }
     }
