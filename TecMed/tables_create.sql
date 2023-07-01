@@ -29,7 +29,7 @@ CREATE TABLE Dates (
     cod_patient int  NOT NULL,
     cod_doctor int  NOT NULL,
     date_day date  NOT NULL,
-    time_day int  NOT NULL,
+    time_day datetime  NOT NULL,
     CONSTRAINT Dates_pk PRIMARY KEY  (cod_date)
 );
 
@@ -71,8 +71,8 @@ CREATE TABLE Medicines (
     med_name varchar(60)  NOT NULL,
     quantity int  NOT NULL,
 	med_measure varchar(3) NOT NULL,
-    med_weight decimal(4,4)  NOT NULL,
-    med_price decimal(4,4)  NOT NULL,
+    med_weight int  NOT NULL,
+    med_price decimal(6,2)  NOT NULL,
     expiration date  NOT NULL,
     production date  NOT NULL,
     CONSTRAINT Medicines_pk PRIMARY KEY  (cod_medicine)
