@@ -20,9 +20,10 @@ db.createCollection("Carers", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["cod_carer", "carer_vigency", "work_turn", "profession", "grade"],
+      required: ["cod_carer", "carer_name", "carer_vigency", "work_turn", "profession", "grade"],
       properties: {
         cod_carer: { bsonType: "int" },
+        carer_name:{ bsonType: "string"},
         carer_vigency: { bsonType: "date" },
         work_turn: { bsonType: "string" },
         profession: { bsonType: "string" },
@@ -86,10 +87,13 @@ db.createCollection("Locations", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["adress", "district", "department"],
+      required: ["address"],
       properties: {
-        adress: { bsonType: "string" },
-        district: { bsonType: "string" },
+        address: { bsonType: "object", properties: {
+          street: { bsonType: "string" },
+          district: { bsonType: "string" }
+        }},
+        city: { bsonType: "string" },
         department: { bsonType: "string" }
       }
     }
@@ -106,6 +110,7 @@ db.createCollection("Medical_Log", {
         cod_log: { bsonType: "int" },
         date_created: { bsonType: "date" }
       }
+
     }
   }
 });
@@ -113,21 +118,27 @@ db.createCollection("Medical_Log", {
 // Colección: Medicines
 db.createCollection("Medicines", {
   validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["cod_medicine", "med_name", "quantity", "med_measure", "med_weight", "med_price", "expiration", "production"],
-      properties: {
-        cod_medicine: { bsonType: "int" },
-        med_name: { bsonType: "string" },
-        quantity: { bsonType: "int" },
-        med_measure: { bsonType: "string" },
-        med_weight: { bsonType: "decimal" },
-        med_price: { bsonType: "decimal" },
-        expiration: { bsonType: "date" },
-        production: { bsonType: "date" }
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["cod_medicine", "med_name", "quantity", "details"],
+        properties: {
+          cod_medicine: { bsonType: "int" },
+          med_name: { bsonType: "string" },
+          quantity: { bsonType: "int" },
+          details: {
+            bsonType: "object",
+            required: ["med_measure", "med_weight", "med_price", "expiration", "production"],
+            properties: {
+              med_measure: { bsonType: "string" },
+              med_weight: { bsonType: "int" },
+              med_price: { bsonType: "double" },
+              expiration: { bsonType: "date" },
+              production: { bsonType: "date" }
+            }
+          }
+        }
       }
     }
-  }
 });
 
 // Colección: Patients
@@ -154,12 +165,21 @@ db.createCollection("Treatments", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["cod_treatment", "cod_medical_log", "treat_start", "treat_end", "disease"],
+      required: ["cod_treatment", "cod_medical_log", "treat_period", "disease"],
       properties: {
         cod_treatment: { bsonType: "int" },
         cod_medical_log: { bsonType: "int" },
-        treat_start: { bsonType: "date" },
-        treat_end: { bsonType: "date" },
+        treat_period: {
+            bsonType: "object",
+            items: {
+                bsonType: "object",
+                required: ["treat_start", "treat_end"],
+                properties: {
+                  treat_start: { bsonType: "date" },
+                    treat_end: { bsonType: "date" }
+                }
+            }
+        },
         disease: { bsonType: "string" }
       }
     }
