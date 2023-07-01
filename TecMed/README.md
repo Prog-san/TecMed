@@ -2,6 +2,9 @@
 **Importante**
 Es importante definir primero las tablas que no tengan relacion o dependencia de FK de otras, luega ya comenzar con las que tengan relacion con las primeras tablas que me hemos creado.
 
+**Un paso previo antes de realizar la creación de tablas e inserción de valores, será crear una query en master donde creee con la sentencia
+CREATE DATABASE (Nombre) y luego realizar realizar los siguientes paso en el database creado **
+
 EJM : Pasos para la creación del database "TecMED" y la inserción de valores.
 
 1.- Ejecutar el script : "tables_create.sql "
