@@ -20,9 +20,10 @@ db.createCollection("Carers", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
-      required: ["cod_carer", "carer_vigency", "work_turn", "profession", "grade"],
+      required: ["cod_carer", "carer_name", "carer_vigency", "work_turn", "profession", "grade"],
       properties: {
         cod_carer: { bsonType: "int" },
+        carer_name:{ bsonType: "string"},
         carer_vigency: { bsonType: "date" },
         work_turn: { bsonType: "string" },
         profession: { bsonType: "string" },
